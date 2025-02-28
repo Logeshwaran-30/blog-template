@@ -1,0 +1,10 @@
+.featured-blog {
+    font-family: 'Roboto', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: black !important;
+}
+
+body {
+    background-color: #cccccc;
+     }
