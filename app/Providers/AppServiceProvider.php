@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,12 +20,16 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-  
-    
-    public function boot()
+    public function boot(): void
     {
-        // Share the categories variable with all views
-        View::share('categories', Category::all());
+        // Prevent DB queries while running artisan commands (migrate, cache, etc.)
+        if (app()->runningInConsole()) {
+            return;
+        }
+
+        // Share categories only if table exists
+        if (Schema::hasTable('categories')) {
+            View::share('categories', Category::all());
+        }
     }
-    
 }
